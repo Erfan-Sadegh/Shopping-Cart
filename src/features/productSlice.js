@@ -14,6 +14,7 @@ const productSlice = createSlice({
     reducers: {
         getProducts: (state, action) => {
             productAdapter.upsertMany(state, action.payload);
+            state.status = 'success';
         }
     }
 })

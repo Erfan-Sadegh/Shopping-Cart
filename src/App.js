@@ -1,6 +1,6 @@
 import React from 'react';
-import './App.css';
 import { RouterConfig } from './routes';
+import 'react-toastify/dist/ReactToastify.css';
 
 // MDB
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
