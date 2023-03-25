@@ -7,6 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useSelector, useDispatch } from 'react-redux';
 import { getProducts, selectAllProducts } from '../../features/productSlice';
 import productsData from '../../data';
+import { addProduct } from '../../features/cartSlice';
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -29,8 +30,18 @@ const HomePage = () => {
     });
   };
 
+  const handleAddToCart = (products) => {
+    dispatch(addProduct(products));
+    handleShowTostify('success', 'Added to Cart');
+  };
+
   const productsComponent = products.map((product) => (
-    <Product key={product.id} handleShowTostify={handleShowTostify} products={product} />
+    <Product
+      key={product.id}
+      handleAddToCart={handleAddToCart}
+      handleShowTostify={handleShowTostify}
+      products={product}
+    />
   ));
 
   return (

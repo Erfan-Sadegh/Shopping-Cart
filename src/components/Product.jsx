@@ -9,24 +9,25 @@ import {
   MDBCol,
 } from 'mdb-react-ui-kit';
 import { useDispatch } from 'react-redux';
-import { addProduct, removeProduct } from '../features/cartSlice';
+import { decrease, increase, removeProduct } from '../features/cartSlice';
 import { useLocation } from 'react-router-dom';
 
-const Product = ({ products, handleShowTostify }) => {
+const Product = ({ products, handleAddToCart }) => {
   const dispatch = useDispatch();
 
   const { id, title, price, img, quantity } = products;
 
   const { pathname } = useLocation();
 
-  const handleAddToCart = () => {
-    dispatch(addProduct(products));
-    // handleShowTostify('success', 'Added to Cart');
-  };
-
   const handleRemove = () => {
     dispatch(removeProduct(id));
-    handleShowTostify('success', 'Removed from Cart');
+  }
+
+  const handleIncrease = () => {
+    dispatch(increase({id}))
+  }
+  const handleDecrease = () => {
+    dispatch(decrease({id}))
   }
 
   return (
@@ -38,15 +39,15 @@ const Product = ({ products, handleShowTostify }) => {
           {pathname === '/' ? (
             <div className='d-flex justify-content-between align-items-center mt-2'>
               <MDBCardText className='mt-3 fw-bold'>${price}</MDBCardText>
-              <MDBBtn onClick={handleAddToCart}>Add to cart</MDBBtn>
+              <MDBBtn onClick={() => handleAddToCart(products)}>Add to cart</MDBBtn>
             </div>
           ) : (
             <>
               <MDBCardText className='mt-3 fw-bold'>${price}</MDBCardText>
               <div className='d-flex justify-content-between align-items-center mt-2'>
-                <MDBBtn color='success'>+</MDBBtn>
+                <MDBBtn color='success' onClick={handleIncrease}>+</MDBBtn>
                 <MDBCardText className='mt-3 fw-bold'>{quantity}</MDBCardText>
-                <MDBBtn color='info'>-</MDBBtn>
+                <MDBBtn color='info' onClick={handleDecrease}>-</MDBBtn>
               </div>
                 <MDBBtn className='mt-3' onClick={handleRemove} color='danger'>Remove</MDBBtn>
             </>
